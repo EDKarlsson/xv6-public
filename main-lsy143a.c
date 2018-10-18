@@ -7,50 +7,31 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-// #include "user.h"
 
-void proc_ls(char *arg)
-{
-    int e = exec("ls", &arg);
-}
+#define true 1
+#define false 0
+#define bool int
 
-void redirectLs(char *dir)
-{
 
-}
+int main(int argc, char *argv[]) {
+    // Variable Declaration
+    pid_t pid;
+    char *const args[] = {"/bin/ls", "-l", NULL};
 
-int openFile(char file[])
-{
-    // Attempt to open the destination file and exit if it fails
-    // printf("Copying: %s to file: %s\n", argv[1], argv[2]);
-    int fd = open(file, (O_CREAT | O_WRONLY | O_TRUNC), (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
-    if(fd < 0) {
-        fprintf(stderr, "Failed to open file %s\nExiting...\n", file);
-        exit(1);
-    }
+    int fd_dest = open("myls.out", (O_CREAT | O_WRONLY | O_TRUNC), (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
 
-    return fd;
-}
-
-int main(int argc, char * argv[])
-{
-     // Variable Declaration
-    char buf[512];
-    double n;
-
-    // if(argc < 2) {
-    //     fprintf(stderr, "Not enough arguments specified\n");
-    //     fprintf(stderr, "Usage: ls [file]\n");
-    //     exit(1);
-    // }
-
-    switch(*argv[1])
-    {
-        case '>':
-            redirectLs(argv[2]);
+    switch ((pid = fork())) {
+        case -1:
+            fprintf(stderr, "Fork failed");
+            break;
+        case 0:
+            // Child process
+            close(1);
+            dup2(fd_dest, 1);
+            execv("/bin/ls", args);
+            fprintf(stderr, "Uknown command\n");
             break;
         default:
-            proc_ls(argv[1]);
             break;
     }
 

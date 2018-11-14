@@ -11,9 +11,10 @@
 int ls(int pipe[]) {
     char *const args[] = {"/bin/ls", "-l", NULL};
     close(1);
-    close(pipe[0]);
 
     dup2(pipe[1], 1);
+
+    close(pipe[0]);
     close(pipe[1]);
 
     int res = execv("/bin/ls", args);
@@ -21,17 +22,19 @@ int ls(int pipe[]) {
 }
 
 int grep(int pipe1[], int pipe2[]) {
-    char *const args[] = {"/bin/grep", NULL};
+    char *const args[] = {"/bin/grep", "main.c", NULL};
     close(0);
     close(1);
 
     // Read from pipe[0] = 3, which is where ls is writing to
     dup2(pipe1[0], 0);
-    close(pipe1[0]);
+    // close(pipe1[0]);
+    close(pipe1[1]);
 
     // Write to pipe2[1] = 6, which is the write end from where wc will read
     dup2(pipe2[1], 1);
-    close(pipe2[1]);
+    // close(pipe2[0]);
+    // close(pipe2[1]);
     int res = execv("/bin/grep", args);
     if (res == -1) fprintf(stderr, "GREP Failed\n");
 }

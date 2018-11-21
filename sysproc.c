@@ -89,3 +89,34 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+
+int
+sys_backtrace(void)
+{
+    int n = 0;
+    int i = 0;
+
+    struct trapframe *tf = myproc()->tf;
+
+    // Registers
+    cprintf("eax:0x%x\n", tf->eax);
+    cprintf("ebx:0x%x\n", tf->ebx);
+    cprintf("ecx:0x%x\n", tf->ecx);
+    cprintf("edx:0x%x\n", tf->edx);
+    // Pointers
+    cprintf("edi:0x%x\n", tf->edi);
+    cprintf("esi:0x%x\n", tf->esi);
+    cprintf("esp:0x%x\n", tf->esp);
+    cprintf("eip:0x%x\n", tf->eip);
+    cprintf("ebp:0x%x\n", tf->ebp);
+    while(argint(i++, &n) == 0){
+        cprintf("#%d 0x%x\n", i-1, n);
+    }
+
+
+    if(n)
+        return n;
+    return -1;
+}
+

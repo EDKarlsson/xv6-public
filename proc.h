@@ -56,3 +56,13 @@ struct proc {
 //   original data and bss
 //   fixed-size stack
 //   expandable heap
+
+//  struct uproc {
+//      char name[16];          // process name
+//      int pid;                // process id
+//      int ppid;               // parent process id
+//      uint sz;                // size of process memory
+//      enum procstate state;   // process state
+//      void *chan;             // process waiting on channel
+//      int killed;             // process killed
+//  };

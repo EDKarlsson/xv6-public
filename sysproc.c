@@ -110,13 +110,28 @@ sys_backtrace(void)
     cprintf("esp:0x%x\n", tf->esp);
     cprintf("eip:0x%x\n", tf->eip);
     cprintf("ebp:0x%x\n", tf->ebp);
-    while(argint(i++, &n) == 0){
-        cprintf("#%d 0x%x\n", i-1, n);
-    }
+//    uint ebp = tf->ebp;
+//    uint * us = (uint *) ebp;
+    uint * us = (uint *) tf->ebp;
 
+    i = 0;
+    while(us)
+    {
+        cprintf("#%d 0x%x\n", i++, *(us + 1));
+        if(*(us+1) == 0xffffffff) break;
+        us = (uint *) * us;
+    }
 
     if(n)
         return n;
     return -1;
 }
 
+//int
+//sys_getprocinfo()
+//{
+//    int proc_num = 0;
+//    struct uproc *up;
+//    getprocinfo(proc_num, &up);
+//    return -1;
+//}

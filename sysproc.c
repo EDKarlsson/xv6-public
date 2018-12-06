@@ -110,11 +110,7 @@ sys_backtrace(void)
     cprintf("esp:0x%x\n", tf->esp);
     cprintf("eip:0x%x\n", tf->eip);
     cprintf("ebp:0x%x\n", tf->ebp);
-//    uint ebp = tf->ebp;
-//    uint * us = (uint *) ebp;
     uint * us = (uint *) tf->ebp;
-
-    i = 0;
     while(us)
     {
         cprintf("#%d 0x%x\n", i++, *(us + 1));

@@ -24,6 +24,9 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int backtrace(void);
+int thread_create(void);
+int thread_join(void);
+int thread_exit(void);
 //int getprocinfo(void);
 
 // ulib.c

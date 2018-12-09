@@ -123,6 +123,21 @@ sys_backtrace(void)
     return -1;
 }
 
+int
+thread_create(void)
+{
+    return 0;
+}
+
+int thread_join(void)
+{
+    return 0;
+}
+
+int thread_exit(void)
+{
+    return 0;
+}
 //int
 //sys_getprocinfo()
 //{

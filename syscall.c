@@ -105,6 +105,9 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_backtrace(void);
+extern int sys_thread_create(void);
+extern int sys_thread_join(void);
+extern int sys_thread_exit(void);
 //extern int sys_getprocinfo(void);
 
 static int (*syscalls[])(void) = {
@@ -130,6 +133,9 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_backtrace] sys_backtrace,
+[SYS_thread_create] SYS_thread_create,
+[SYS_thread_join] SYS_thread_join,
+[SYS_thread_exit] SYS_thread_exit,
 //[SYS_getprocinfo] sys_getprocinfo
 };
 

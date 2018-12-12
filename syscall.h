@@ -22,6 +22,6 @@
 #define SYS_close  21
 #define SYS_backtrace 22
 #define SYS_getprocinfo 23
-#define SYS_create_thread 24
-#define SYS_create_join 25
-#define SYS_create_exit 26
+#define SYS_thread_create 24
+#define SYS_thread_join 25
+#define SYS_thread_exit 26

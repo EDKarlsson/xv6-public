@@ -118,24 +118,31 @@ sys_backtrace(void)
         us = (uint *) * us;
     }
 
-    if(n)
-        return n;
+    if(n) return n;
     return -1;
 }
 
 int
-thread_create(void)
+sys_thread_create(void)
 {
+    cprintf("Creating thread\n\n");
+    struct proc *p = myproc();
+    return thread_create( (void*)(argptr(0,(void*)&p->tf->eip,sizeof(p->tf->eip))),
+                          (void*)(argint(1,&p->pid)),
+                          (void*)(argptr(2,(void*)&p->kstack,0x1000)));
+}
+
+int
+sys_thread_join(void)
+{
+    cprintf("Joining thread\n\n");
     return 0;
 }
 
-int thread_join(void)
+int
+sys_thread_exit(void)
 {
-    return 0;
-}
-
-int thread_exit(void)
-{
+    cprintf("Exiting thread\n\n");
     return 0;
 }
 //int
